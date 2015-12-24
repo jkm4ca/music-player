@@ -25,12 +25,14 @@ jQuery(function($) {
 	*/
 	var list =[
 		{"track":1,"name":"Crossfire","file":"crossfire"},
-		{"track":2,"name":"Wedding March Variation 1","file":"02_Wedding_March_1"},
-		{"track":3,"name":"lol","file":"03_Happy_Birthday_Variation_In_The"}
+		{"track":2,"name":"Won't Back Down","file":"back_down"},
+		{"track":3,"name":"Afterlife","file":"afterlife"}
 	];
+
+	//Generate HTML from list
 	var i = 0;
 	while (list[i]){
-		$("#list").append("<li>" + list[i].name + "</li>");
+		$("#list").append(('<li><div class="plItem"><div class="plNum">' + (i+1) + '</div><div class="plTitle">' + list[i].name + '</div><div class="plLength">'+'100'+'</div></div></li>'));
 		i++;
 	};
 
@@ -40,11 +42,7 @@ jQuery(function($) {
 		playing = false;
 		mediaPath = 'audio/',
 		extension = '',
-		tracks = [
-		{"track":1,"name":"Crossfire","file":"crossfire"},
-		{"track":2,"name":"Wedding March Variation 1","file":"02_Wedding_March_1"},
-		{"track":3,"name":"lol","file":"03_Happy_Birthday_Variation_In_The"}
-		],
+		tracks = list,
 		trackCount = tracks.length,
 		//Link status to HTML
 		npAction = $('#npAction'),
@@ -101,7 +99,7 @@ jQuery(function($) {
 		}),
 
 		//Song Selection to Play
-		li = $('#plUL li').click(function() {
+		li = $('#list li').click(function() {
 			var id = parseInt($(this).index());
 			if(id !== index) {
 				playTrack(id);
@@ -109,8 +107,9 @@ jQuery(function($) {
 		}),
 
 		loadTrack = function(id) {
+			console.log(id);
 			$('.plSel').removeClass('plSel');
-			$('#plUL li:eq(' + id + ')').addClass('plSel');
+			$('#list li:eq(' + id + ')').addClass('plSel');
 			npTitle.text(tracks[id].name);
 			index = id;
 			audio.src = mediaPath + tracks[id].file + extension;
